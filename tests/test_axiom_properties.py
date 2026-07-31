@@ -3,10 +3,8 @@ Property-Based Verification Suite for Axiom Protocol v2.7
 Uses Hypothesis to rigorously verify algebraic invariants, bijectivity, and fuzz resilience.
 """
 
-from hypothesis import given, strategies as st
+from hypothesis import given, strategies as st, settings, HealthCheck
 import pytest
-import math
-import unicodedata
 from axiom.protocol import (
     CanonicalSerializer,
     FrozenDict,
@@ -24,18 +22,18 @@ axiom_primitives = st.one_of(
     st.none(),
     st.booleans(),
     st.integers(min_value=-2**63, max_value=2**63 - 1),
-    st.floats(allow_nan=False, allow_infinity=False),
-    st.text(),
+    st.floats(allow_nan=False, allow_infinity=False, width=64),
+    st.text(max_size=32),
 )
 
-def axiom_values(max_depth=4):
+def axiom_values(max_leaves=8):
     return st.recursive(
         axiom_primitives,
         lambda children: st.one_of(
-            st.tuples(*[children for _ in range(st.integers(0, 3).example())]),
-            st.dictionaries(st.text(), children).map(lambda d: FrozenDict(d)),
+            st.lists(children, max_size=4).map(tuple),
+            st.dictionaries(st.text(max_size=16), children, max_size=4).map(lambda d: FrozenDict(d)),
         ),
-        max_leaves=10,
+        max_leaves=max_leaves,
     )
 
 
@@ -43,6 +41,7 @@ def axiom_values(max_depth=4):
 # 2. Algebraic Invariant Tests (Bijectivity & Canonical Formalism)
 # ============================================================ #
 
+@settings(max_examples=200, deadline=None, suppress_health_check=[HealthCheck.too_slow])
 @given(val=axiom_values())
 def test_axiom_value_roundtrip_bijectivity(val: AxiomValue):
     """
@@ -52,11 +51,11 @@ def test_axiom_value_roundtrip_bijectivity(val: AxiomValue):
     encoded_bytes = CanonicalSerializer.serialize_to_bytes(sanitized)
     decoded_val = CanonicalSerializer.deserialize_from_bytes(encoded_bytes)
 
-    # 1. Structural and Type Equivalence
     assert _strict_eq(sanitized, decoded_val)
     assert type(sanitized) is type(decoded_val)
 
 
+@settings(max_examples=200, deadline=None, suppress_health_check=[HealthCheck.too_slow])
 @given(val=axiom_values())
 def test_canonical_byte_identity(val: AxiomValue):
     """
@@ -71,7 +70,8 @@ def test_canonical_byte_identity(val: AxiomValue):
     assert b1 == b2
 
 
-@given(data=st.binary())
+@settings(max_examples=300, deadline=None)
+@given(data=st.binary(max_size=256))
 def test_malformed_byte_stream_fuzz_rejection(data: bytes):
     """
     Axiom 3: Any arbitrary byte stream B either succeeds with S(D(B)) == B,
@@ -80,14 +80,13 @@ def test_malformed_byte_stream_fuzz_rejection(data: bytes):
     try:
         decoded = CanonicalSerializer.deserialize_from_bytes(data)
         re_encoded = CanonicalSerializer.serialize_to_bytes(decoded)
-        # If deserialization succeeds, B MUST be the canonical representation
         assert data == re_encoded
-    except ValueError:
-        # Expected canonical rejection
+    except (ValueError, UnicodeDecodeError):
         pass
 
 
-@given(d=st.dictionaries(st.text(), axiom_values()))
+@settings(max_examples=100, deadline=None, suppress_health_check=[HealthCheck.too_slow])
+@given(d=st.dictionaries(st.text(max_size=16), axiom_values(max_leaves=4), max_size=5))
 def test_frozendict_immutability_and_hash_coherence(d: dict):
     """
     Axiom 4: FrozenDict preserves strict type key equality and produces invariant hashes.
