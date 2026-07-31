@@ -1,81 +1,220 @@
-# Axiom Framework
+Axiom Framework
 
-**Axiom Framework** — 既存の理論モジュール（PSS / PLP / Capsule / LRP / DCK）を束ね、複数LLMが協調して問題を解決するためのランタイム中心フレームワーク。
+«A Universal Protocol Framework for Intelligence-Neutral AI Systems»
 
-> 実験は忠実に実際行って
+Axiom Framework is a protocol-based architecture for constructing AI systems through deterministic state transitions rather than model-specific implementations.
 
-## 現状（2026-07-31）
+Instead of defining how an AI should think, Axiom Framework defines how reasoning, state, and execution should be represented.
 
-理論モジュールは揃ってきている。  
-**中核ランタイムとして Universal Protocol Runtime (UPR) v1.2 を正式に導入しました。**
+The framework is designed to be:
 
-UPR は「ドメイン知識ゼロ・副作用ゼロ・参照リークゼロの完全決定論的状態遷移エンジン」です。  
-Stage の純粋性を極限まで高め、他言語移植や分散実行を見据えたプロトコル規格として設計されています。
+- Intelligence Neutral
+- Language Neutral
+- Runtime Neutral
+- Vendor Independent
+- Deterministic by Design
 
-## クイックスタート
+The objective is to establish an open protocol layer that enables different AI models, runtimes, and programming languages to interoperate through common specifications.
 
-```bash
-# デモ実行（検証済み）
-PYTHONPATH=src python -m axiom.upr
-```
+---
 
-または Python から:
+Core Philosophy
 
-```python
-from axiom import (
-    UniversalProtocolRuntime,
-    LinearPipeline,
-    PipelineDefinition,
-    VirtualClock,
-    ThreadSafeSequentialIdGenerator,
-    ConsoleEventSink,
-    MemoryHistoryRecorder,
-)
+Traditional AI frameworks tightly couple:
 
-# ... (詳細は src/axiom/upr.py の main() を参照)
-```
+- reasoning
+- execution
+- memory
+- prompts
+- model implementation
 
-## ディレクトリ構成
+Axiom Framework separates these concerns into independent protocol layers.
 
-```
+Application
+      │
+Axiom Framework
+      │
+Universal Protocol Runtime (UPR)
+      │
+Protocol Modules
+      │
+Execution Runtime
+
+Each protocol owns a single responsibility.
+
+This enables replacement of individual components without redesigning the overall architecture.
+
+---
+
+Architecture
+
+                +----------------------+
+                |   Application Layer  |
+                +----------+-----------+
+                           |
+                 Universal Protocol Runtime
+                           |
+      +--------------------+--------------------+
+      |                    |                    |
+     PLP                  PSS                  LRP
+      |                    |                    |
+Physical State      Problem Space      Reasoning Process
+Representation      Specification      Transition
+      |
+   Capsule
+
+---
+
+Components
+
+Universal Protocol Runtime (UPR)
+
+The execution foundation of the framework.
+
+Responsibilities:
+
+- protocol orchestration
+- state transition
+- event routing
+- runtime lifecycle
+- module interoperability
+
+UPR intentionally contains no intelligence.
+
+It only manages protocol execution.
+
+---
+
+PLP (Particle Language Protocol)
+
+PLP represents information as semantic-independent particles.
+
+Instead of storing language,
+PLP stores structured state.
+
+Features:
+
+- language independent
+- deterministic
+- model neutral
+- observer independent
+
+---
+
+PLP Capsule
+
+Capsules package reusable protocol states.
+
+A Capsule may include:
+
+- reasoning context
+- protocol state
+- dependency graph
+- capabilities
+- metadata
+
+Capsules are portable between runtimes.
+
+---
+
+PSS (Problem Specification System)
+
+Defines problems before reasoning begins.
+
+PSS separates:
+
+- goals
+- constraints
+- assumptions
+- evaluation criteria
+
+This prevents ambiguity entering downstream reasoning.
+
+---
+
+LRP (LLM Reasoning Protocol)
+
+Defines reasoning as observable state transitions.
+
+Rather than storing conversations,
+LRP stores transition history.
+
+This enables:
+
+- replay
+- auditing
+- deterministic inspection
+
+---
+
+Design Principles
+
+The framework follows several fundamental principles.
+
+- Intelligence Neutral
+- Protocol First
+- State Transition First
+- Deterministic Execution
+- Replaceable Modules
+- Language Independence
+- Runtime Independence
+- Observable Reasoning
+- Minimal Core
+- Extensible Architecture
+
+---
+
+Repository Structure
+
 Axiom-Framework/
-├── README.md
-├── ROADMAP.md
-├── docs/
-│   └── UPR_v1.2_Specification.md   # 正式仕様書
-├── src/
-│   └── axiom/
-│       ├── __init__.py
-│       └── upr.py                  # Universal Protocol Runtime v1.2
-└── examples/                       # 今後追加予定
-```
 
-## ロードマップ
+README.md
+ROADMAP.md
 
-詳細は [ROADMAP.md](./ROADMAP.md) を参照。
+docs/
+    UPR_v1.2_Specification.md
 
-### 完了
+src/
 
-- [x] **UPR v1.2 Final Specification** の導入（DomainEvent/EngineEvent分離、ExtensionOp、Deep Immutable、Pipeline分離、Thread-Safe ID）
+    axiom/
+        upr.py
 
-### 次の優先
+    modules/
 
-**Axiom Runtime としての統合（Phase 0 継続）**
+        plp_kernel.py
+        plp_capsule.py
 
-- 既存モジュール（PSS / PLP / Capsule / LRP / DCK）を UPR の Stage として接続
-- 複数LLM協調の最小デモ
+---
 
-## 設計原則（UPR から継承）
+Current Modules
 
-1. Stage は ID / Clock / 副作用を一切知らない（純粋変換のみ）
-2. Runtime がすべてのメタデータと副作用を責任を持って包む
-3. 拡張は宣言的な ExtensionOp のみで行い、深い不変性を保証
-4. Pipeline は定義とナビゲーションを分離し、差し替え可能にする
+Module| Status
+UPR v1.2| Stable
+PLP Kernel v10.x| Stable
+PLP Capsule v1.x| Stable
+PSS| In Progress
+LRP| In Progress
+DCK| Planned Integration
 
-## 関連リポジトリ
+---
 
-- [PLP](https://github.com/kishimoto-void/PLP)
-- [PSS](https://github.com/kishimoto-void/PSS)
-- [Difference-Convergence-Kernel-DCK](https://github.com/kishimoto-void/Difference-Convergence-Kernel-DCK)
-- [hubCORE](https://github.com/kishimoto-void/hubCORE)
-- [voidCORE](https://github.com/kishimoto-void/voidCORE)
+Goals
+
+Axiom Framework aims to become an open protocol specification rather than a traditional software framework.
+
+The long-term objective is interoperability between:
+
+- local LLMs
+- cloud AI
+- robotics
+- distributed systems
+- multi-agent systems
+- future reasoning engines
+
+without changing the protocol layer.
+
+---
+
+License
+
+See the LICENSE file for licensing information.
