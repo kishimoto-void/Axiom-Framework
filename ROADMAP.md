@@ -2,7 +2,7 @@
 
 > **実験は忠実に実際行って**
 
-## 1. 現状認識
+## 1. 現状認識（2026-07-31 更新）
 
 これまでの議論と既存コンポーネントを踏まえると、理論モジュールはかなり揃ってきている。
 
@@ -13,16 +13,18 @@
 | Capsule | ✅ 揃っている | 状態・制約のカプセル化 |
 | LRP | ✅ 揃っている | レイヤー間の関係処理 |
 | DCK (Difference Convergence Kernel) | ✅ 揃っている | 差分収束の中核 |
+| **UPR (Universal Protocol Runtime) v1.2** | ✅ **導入完了** | **中核ランタイム（本リポジトリ）** |
 
-**足りないのは「新しいモジュール」ではなく、全体を束ねる中核コードである。**
+**足りないのは「新しいモジュール」ではなく、全体を束ねる中核コードである。**  
+→ **UPR v1.2 を正式に基盤として採用しました。**
 
 ```
-Axiom Runtime
-├── Context
-├── Pipeline
-├── Plugin
+Axiom Runtime (UPR v1.2 上に構築)
+├── Context          ← ProtocolContext + Extensions
+├── Pipeline         ← PipelineDefinition + LinearPipeline / 将来の Navigator
+├── Plugin (LLMProvider)
 ├── Evaluation
-└── Loop Controller
+└── Loop Controller  ← UniversalProtocolRuntime.run()
 ```
 
 この「全体を動かすランタイム」を作ることで、プロジェクトとしての完成度が一段上がる。
@@ -31,7 +33,7 @@ Axiom Runtime
 
 ## 2. 優先順位
 
-### 1. Axiom Runtime（最優先）
+### 1. Axiom Runtime（最優先） — UPR 基盤上で進行中
 
 今ある部品を繋ぐオーケストレーター。
 
@@ -51,24 +53,15 @@ LLM
 PSS
 ```
 
-を **1つの `run()`** で回せるランタイムを実装する。
+を **1つの `run()`** で回せるランタイムを実装する。  
+UPR の `UniversalProtocolRuntime` + `Stage` プロトコルがそのまま骨格になります。
 
 **目標**: 複数LLMがAxiom Runtimeを介して1つの問題を協調解決できる最小デモを動かす。
 
 ### 2. Axiom Context
 
-各レイヤーが共有する共通コンテキスト。
-
-必須フィールド例:
-
-- `session_id`
-- `problem_id`
-- `capsule_id`
-- `version`
-- `state`
-- `history`
-
-これを一元管理し、レイヤー間で一貫した状態を保てるようにする。
+各レイヤーが共有する共通コンテキスト。  
+UPR の `ProtocolContext` + `NamespacedExtensions` を拡張して実現。
 
 ### 3. Plugin Interface
 
@@ -76,7 +69,7 @@ LLMを差し替え可能な仕組み。
 
 ```python
 class LLMProvider:
-    def invoke(self, prompt: str, context: AxiomContext, **kwargs) -> str:
+    def invoke(self, prompt: str, context: ProtocolContext, **kwargs) -> str:
         ...
 ```
 
@@ -92,15 +85,8 @@ class LLMProvider:
 
 ### 4. Pipeline Manager
 
-「どの順番で処理するか」を定義・差し替え可能にする。
-
-想定パイプライン例:
-
-- `StandardPipeline`
-- `MultiAgentPipeline`
-- `ValidationPipeline`
-
-Pipelineを差し替えるだけで、挙動を大きく変えられるように設計する。
+「どの順番で処理するか」を定義・差し替え可能にする。  
+UPR の `Pipeline` / `PipelineDefinition` をそのまま活用・拡張。
 
 ### 5. Evaluation（重要）
 
@@ -123,13 +109,13 @@ Pipelineを差し替えるだけで、挙動を大きく変えられるように
 
 ## 3. フェーズ計画
 
-### Phase 0: Axiom Runtime v0.1（最小動作デモ）
+### Phase 0: Axiom Runtime v0.1（最小動作デモ） — 進行中
 
 **目標期間**: できるだけ早期
 
-- [ ] `AxiomRuntime` クラスの骨格実装
-- [ ] 最小の `run(problem)` ループ
-- [ ] 既存モジュール（PSS / PLP / Capsule / LRP / DCK）を仮実装またはスタブで接続
+- [x] `UniversalProtocolRuntime` (UPR v1.2) の導入と検証
+- [x] DomainEvent / EngineEvent 分離、ExtensionOp、Deep Immutable、Pipeline 分離
+- [ ] 既存モジュール（PSS / PLP / Capsule / LRP / DCK）を UPR の Stage として接続（仮実装またはスタブ）
 - [ ] 単一LLMでの基本フロー動作確認
 - [ ] 複数LLM協調の最小デモ（2つのLLMが同じ問題を扱う）
 
@@ -138,7 +124,7 @@ Pipelineを差し替えるだけで、挙動を大きく変えられるように
 
 ### Phase 1: Context & Plugin 整備
 
-- [ ] `AxiomContext` の正式実装（Session / Problem / Capsule / State / History）
+- [ ] `ProtocolContext` の Axiom 向け拡張（Session / Problem / Capsule / State / History）
 - [ ] `LLMProvider` インターフェースの確定
 - [ ] 主要LLM用のAdapter実装（最低2つ以上）
 - [ ] Contextを介した状態の一貫性テスト
@@ -173,6 +159,9 @@ Pipelineを差し替えるだけで、挙動を大きく変えられるように
 4. **実験は忠実に実際行って**  
    指標を測り、比較し、結果を残す。意図ではなく、実際の動作と数値で判断する。
 
+5. **UPR の純粋性を維持する**  
+   Stage は副作用を持たず、Runtime がすべてのメタデータと外部効果を責任を持つ。
+
 ---
 
 ## 5. 最初の具体的ゴール（再掲）
@@ -183,4 +172,4 @@ Pipelineを差し替えるだけで、挙動を大きく変えられるように
 
 ---
 
-*最終更新: 2026-07-30*
+*最終更新: 2026-07-31*
