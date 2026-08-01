@@ -8,7 +8,7 @@
 - **Version**: 1.1.0
 - **Date**: 2026-08-01
 - **Author**: kishimoto-void
-- **License**: Non-Commercial / Non-Military Use Only
+- **License**: [AXIOM Framework Research License v1.0](../LICENSE)
 
 ---
 
