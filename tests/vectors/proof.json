@@ -1,0 +1,62 @@
+{
+  "header": {
+    "protocol": "AXIOM",
+    "version": "1.0.3",
+    "encoding": "rfc8785-jcs",
+    "hash_algorithm": "sha256"
+  },
+  "genesis": {
+    "genesis_id": "GENESIS-PROOF",
+    "created_by": "System",
+    "initial_state_hash": "64b35aeda8bcf99da0b29e356564814edfb8f89b7626d8362666a9295eae530a",
+    "timestamp": "2026-08-01T00:00:00Z"
+  },
+  "core": {
+    "identity": {
+      "entity": "Agent-1",
+      "scope": "World-0",
+      "domain": "Physics",
+      "boundary": []
+    },
+    "state": {
+      "current": {
+        "pos": {
+          "$type": "decimal",
+          "$value": "0"
+        }
+      },
+      "initial": {
+        "pos": {
+          "$type": "decimal",
+          "$value": "0"
+        }
+      },
+      "target": {
+        "pos": {
+          "$type": "decimal",
+          "$value": "0"
+        }
+      },
+      "transition": []
+    },
+    "invariant": {
+      "must_hold": [],
+      "forbidden": [],
+      "conservation": []
+    },
+    "constraint": {
+      "hard": [],
+      "soft": [],
+      "resource": [],
+      "limit": []
+    }
+  },
+  "proofs": [
+    {
+      "algorithm": "ed25519",
+      "signer": "Validator-1",
+      "signature": "sig_placeholder_hex_0123456789abcdef",
+      "target_hash": "a5edbf249a3255c9bcb48c9af9bac627b22b26fe02515f7c4c276bc9b5c00b56"
+    }
+  ]
+}
