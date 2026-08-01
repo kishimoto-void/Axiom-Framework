@@ -1,32 +1,141 @@
-AXIOM Framework / AXIOM Common Protocol
-Non-Commercial License
+AXIOM Framework Research License v1.0
 
-Copyright (c) 2026 kishimoto-void (岸本)
+Copyright (c) 2026 AXIOM Framework Contributors
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to use,
-copy, modify, merge, publish, and distribute the Software for **non-commercial**
-and **non-military** purposes only, subject to the following conditions:
+1. Purpose
 
-1. The above copyright notice and this permission notice shall be included in
-   all copies or substantial portions of the Software.
+AXIOM Framework Research License（以下「本ライセンス」）は、AXIOM Framework、その関連仕様、実装、ドキュメント、および研究成果物の利用条件を定めるものです。
 
-2. **Commercial use is prohibited.**  
-   You may not use the Software, or any derivative works, for any commercial
-   purpose, including but not limited to selling, licensing, or incorporating
-   the Software into commercial products or services, without prior written
-   permission from the copyright holder.
+本ライセンスは、人工知能、安全な計算基盤、状態管理、知識表現、推論構造、および関連研究の発展を目的としています。
 
-3. **Military use is prohibited.**  
-   You may not use the Software for any military, defense, or weapons-related
-   purpose.
+---
 
-4. The Software is provided "as is", without warranty of any kind, express or
-   implied, including but not limited to the warranties of merchantability,
-   fitness for a particular purpose and noninfringement. In no event shall the
-   authors or copyright holders be liable for any claim, damages or other
-   liability, whether in an action of contract, tort or otherwise, arising from,
-   out of or in connection with the Software or the use or other dealings in
-   the Software.
+2. Permission Grant
 
-For commercial licensing inquiries, please contact the copyright holder.
+本ライセンスの条件に従う限り、利用者は以下を自由に行うことができます。
+
+- 個人利用
+- 学術研究
+- 教育目的での利用
+- 非営利目的での利用
+- 評価、検証、実験
+- 改変および派生研究
+
+利用者は、内部研究および研究成果の公開を目的として、本ソフトウェアおよび仕様を利用できます。
+
+---
+
+3. Attribution Requirement
+
+利用者は、派生物または利用成果物において、以下を保持してください。
+
+- 原著作者表示
+- 本ライセンスへの参照
+- AXIOM Framework由来であることの明示
+
+変更を加えた場合は、変更内容を明示してください。
+
+---
+
+4. Restricted Uses
+
+著作権者の事前許可なく、以下の目的で本成果物を利用することを禁止します。
+
+4.1 Military Use
+
+以下を含む軍事目的での利用は禁止されます。
+
+- 兵器システム
+- 攻撃システム
+- 戦闘支援システム
+- 軍事作戦を直接支援するシステム
+- 人的被害を目的または補助する用途
+
+---
+
+4.2 Harm-Oriented Use
+
+以下の目的での利用は禁止されます。
+
+- 人間への危害を目的とするシステム
+- 自律的な攻撃判断を目的とするシステム
+- 安全性を意図的に低下させる利用
+
+---
+
+4.3 Commercial Use
+
+商業目的での利用には、別途許諾が必要です。
+
+商用利用には、以下を含む個別契約を締結できます。
+
+- 利用範囲
+- 対象製品
+- 安全性要件
+- 技術貢献条件
+- ライセンス条件
+
+---
+
+5. Commercial and Institutional Licensing
+
+企業、組織、研究機関による利用については、目的および安全性を確認した上で、個別ライセンスを提供できます。
+
+著作権者は、公益性、安全性、研究貢献その他の要素を考慮し、以下を選択できます。
+
+- 無償利用許諾
+- 有償利用許諾
+- 共同研究契約
+- 技術移転契約
+- 権利移転契約
+
+---
+
+6. Specification and Implementation
+
+AXIOM Frameworkは以下の構成要素を含みます。
+
+- ACP (Axiom Common Protocol)
+- PLP (Particle Language Protocol)
+- Capsule Runtime
+- 関連仕様書および研究成果物
+
+これらは本ライセンスの対象となります。
+
+ただし、個別に異なるライセンスを指定されたコンポーネントについては、その指定ライセンスが優先されます。
+
+---
+
+7. Separate Components
+
+以下のコンポーネントは別ライセンスとして管理されます。
+
+DCK (Difference Convergence Kernel)
+
+DCKはMIT Licenseの条件に従います。
+
+---
+
+8. Disclaimer
+
+本成果物は研究および開発目的で提供されます。
+
+本成果物は「現状のまま」提供され、明示または黙示を問わず、いかなる保証もありません。
+
+利用によって発生した損害について、著作者および貢献者は責任を負いません。
+
+---
+
+9. License Changes
+
+本ライセンスの変更は、著作権者または正式な管理者によって行われます。
+
+既に許諾された利用権については、適用された条件に従います。
+
+---
+
+10. Final Statement
+
+AXIOM Frameworkは、人間と人工知能が安全かつ持続可能に協調するための研究基盤として提供されます。
+
+利用者は、本技術の目的と安全性を尊重して利用してください。
