@@ -37,7 +37,7 @@ The protocol is independent of Python and can be implemented in Rust, Go, C++, J
 
 ACP does not describe reasoning.
 
-It describes **state**.
+It describes **state integrity**.
 
 Reasoning engines remain free to evolve independently.
 
@@ -55,24 +55,47 @@ The protocol represents **immutable state coordinates**.
 
 Runtime information belongs outside the protocol.
 
+### Representation Independent
+
+ACP does **not** depend on any particular state representation.
+
+It can wrap:
+
+- PLP particle states
+- Robot poses
+- Financial transactions
+- Sensor readings
+- LLM internal states
+- Database snapshots
+- Any other structured state
+
+PLP is the first native state representation profile of ACP, not its foundation.
+
 ---
 
 ## Protocol Layers
 
 ```
-Application
-      │
-Reasoning Engine
-      │
-Capsule (Mutable Runtime Payload)
-      │
-──────────────────────────────────
-AXIOM Common Protocol
-(State / DAG / Coordinate / Proof)
-──────────────────────────────────
-      │
-Physical / Logical State
+Applications
+         │
+  LRP / PSS / DCK
+         │
+      Capsule
+         │
+  ┌──────┴──────┐
+  ▼             ▼
+ ACP           PLP
+State Integrity   State Representation
+  │             │
+  └──────┬──────┘
+         │
+    Runtime / Reality
 ```
+
+| Layer | Role | Question |
+|-------|------|----------|
+| **ACP** | State Integrity Layer | When, from where, how did it change, and who proved it? |
+| **PLP** | State Representation Layer | What *is* the state? (particles, geometry, dynamics) |
 
 ---
 
@@ -173,6 +196,18 @@ Mutable execution data belongs in **Capsule**.
 | Hashes | Model Output |
 
 This separation keeps the protocol deterministic while allowing runtime flexibility.
+
+---
+
+## Relationship to PLP
+
+PLP and ACP are **siblings**, not a hierarchy.
+
+- **PLP** answers “what is the state?”
+- **ACP** answers “how is the state identified, ordered, and proven?”
+
+ACP can carry PLP states, but is deliberately independent of any single representation model.  
+This keeps ACP adoptable by systems that do not use PLP.
 
 ---
 

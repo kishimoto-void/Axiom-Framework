@@ -31,22 +31,32 @@ Traditional AI frameworks tightly couple:
 Axiom Framework separates these concerns into independent protocol layers.
 
 ```
-Application
-      │
-Reasoning Engine (LRP / PSS / DCK)
-      │
-Capsule (Mutable Runtime Payload)
-      │
-──────────────────────────────────
-AXIOM Common Protocol (ACP)
-(State Coordinate / Causal DAG / Proof / Hash)
-──────────────────────────────────
-      │
-Physical / Logical State (PLP)
+Applications
+         │
+  LRP / PSS / DCK
+         │
+      Capsule
+         │
+  ┌──────┴──────┐
+  ▼             ▼
+ ACP           PLP
+State Integrity   State Representation
+  │             │
+  └──────┬──────┘
+         │
+    Runtime / Reality
 ```
 
-Each protocol owns a single responsibility.  
-This enables replacement of individual components without redesigning the overall architecture.
+**ACP** and **PLP** are sibling layers with distinct responsibilities:
+
+| Layer | Role | Question |
+|-------|------|----------|
+| **ACP** | State Integrity Layer | When, from where, how did it change, and who proved it? |
+| **PLP** | State Representation Layer | What *is* the state? (particles, geometry, dynamics) |
+
+ACP does **not** depend exclusively on PLP.  
+It can wrap any state — robot pose, financial transaction, sensor reading, LLM internal state, database snapshot, etc.  
+PLP is the first native state representation profile of ACP.
 
 ---
 
@@ -90,25 +100,23 @@ ACP intentionally contains **no reasoning logic** and **no AI model assumptions*
 
 ```
 Applications
-                     │
-     ┌───────────────┼───────────────┐
-     │               │               │
-    LRP            PSS            DCK
-     │               │               │
-     └───────────────┼───────────────┘
-                     │
-                Capsule Standard
-           （可変・実行時ペイロード）
-                     │
-────────────────────────────────────────
-                     │
-        AXIOM COMMON PROTOCOL
-（不変の状態座標・因果DAG・Proof・Hash）
-                     │
-────────────────────────────────────────
-                     │
-                    PLP
-      （言語・モデル非依存の状態表現）
+                         │
+              LRP / PSS / DCK
+                         │
+                    Capsule
+                         │
+        ┌────────────────┴────────────────┐
+        ▼                                 ▼
+       ACP                               PLP
+  State Integrity                 State Representation
+  - Identity                      - Particle Model
+  - Hash                          - Geometry
+  - DAG                           - Dynamics
+  - Proof                         - Physical Meaning
+        │                                 │
+        └────────────────┬────────────────┘
+                         │
+                  Runtime / Reality
 ```
 
 ---
@@ -132,16 +140,12 @@ It only manages protocol execution.
 
 ### PLP (Particle Language Protocol)
 
-PLP represents information as semantic-independent particles.
+PLP is a **State Representation** profile.
 
-Instead of storing language, PLP stores structured state.
+It answers “what is the state?” using particles, vectors, geometry, and dynamics.  
+PLP is language-independent, model-neutral, and observer-independent.
 
-Features:
-
-- language independent
-- deterministic
-- model neutral
-- observer independent
+ACP can carry PLP states, but is not limited to them.
 
 ### Capsule
 
@@ -155,26 +159,15 @@ A Capsule may include:
 - embeddings
 - memory traces
 
-Capsules are portable between runtimes and sit **above** ACP.
+Capsules sit above both ACP and PLP.
 
 ### PSS (Problem Specification System)
 
 Defines problems before reasoning begins.
 
-PSS separates:
-
-- goals
-- constraints
-- assumptions
-- evaluation criteria
-
 ### LRP (LLM Reasoning Protocol)
 
 Defines reasoning as observable state transitions.
-
-Rather than storing conversations, LRP stores transition history.
-
-This enables replay, auditing, and deterministic inspection.
 
 ---
 
@@ -190,6 +183,7 @@ This enables replay, auditing, and deterministic inspection.
 - Observable Reasoning
 - Minimal Core
 - Extensible Architecture
+- **Sibling Integrity & Representation** (ACP ↔ PLP)
 - **Immutable Core / Mutable Extension** (ACP ↔ Capsule)
 
 ---

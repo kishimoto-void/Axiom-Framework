@@ -11,9 +11,10 @@
 ### 成果物
 
 - ✅ `common_protocol.py`
-- README
+- ✅ README
+- ✅ Golden Test Vectors
+- ✅ Conformance Report
 - SPECIFICATION.md（RFC形式）
-- Golden Test Vectors
 - Security Considerations
 - ChangeLog
 
@@ -90,13 +91,9 @@
 役割は
 
 ```
-AXIOM
-  ↓
-共通骨格
+ACP (Immutable)
 ────────────
-Capsule
-  ↓
-可変情報
+Capsule (Mutable)
 ```
 
 例えば
@@ -110,7 +107,7 @@ Capsule
 
 などです。
 
-AXIOMは触らず、**Capsuleだけ拡張**できます。
+ACPは触らず、**Capsuleだけ拡張**できます。
 
 ---
 
@@ -121,9 +118,7 @@ AXIOMは触らず、**Capsuleだけ拡張**できます。
 ```
 LRP
   ↓
-AXIOM
-  ↓
-Capsule
+ACP + Capsule
 ```
 
 になります。
@@ -135,34 +130,32 @@ Reasoning
   ↓
 Transition生成
   ↓
-AXIOMへ保存
+ACPへ保存
 ```
 
 という流れです。
 
 ---
 
-## Phase 6 — PLP Integration
+## Phase 6 — PLP as Native Profile
 
-さらに **PLP** との接続。
+PLP を ACP の最初のネイティブ状態表現プロファイルとして接続します。
 
 ```
-PLP
-  ↓
-状態
-  ↓
-AXIOM
-  ↓
-Capsule
+        ┌──────────┐
+        │   ACP    │  ← State Integrity
+        └────┬─────┘
+             │ carries
+        ┌────▼─────┐
+        │   PLP    │  ← State Representation (first native profile)
+        └──────────┘
 ```
 
-になります。
+- PLP は「状態とは何か」を定義する
+- ACP は「その状態をどう識別・因果付け・証明するか」を定義する
+- ACP は PLP 以外の状態表現も直接扱える
 
-- PLP は物理状態
-- AXIOM は状態座標
-- Capsule は可変情報
-
-という役割になります。
+この分離により、ACP は PLP 専用プロトコルではなく、汎用の状態整合性プロトコルになります。
 
 ---
 
@@ -220,25 +213,32 @@ Version 2
 
 ```
 Applications
-                     │
-     ┌───────────────┼───────────────┐
-     │               │               │
-    LRP            PSS            DCK
-     │               │               │
-     └───────────────┼───────────────┘
-                     │
-                Capsule Standard
-           （可変・実行時ペイロード）
-                     │
-────────────────────────────────────────
-                     │
-        AXIOM COMMON PROTOCOL
-（不変の状態座標・因果DAG・Proof・Hash）
-                     │
-────────────────────────────────────────
-                     │
-                    PLP
-      （言語・モデル非依存の状態表現）
+                         │
+              LRP / PSS / DCK
+                         │
+                    Capsule
+                         │
+        ┌────────────────┴────────────────┐
+        ▼                                 ▼
+       ACP                               PLP
+  State Integrity                 State Representation
+  - Identity                      - Particle Model
+  - Hash                          - Geometry
+  - DAG                           - Dynamics
+  - Proof                         - Physical Meaning
+        │                                 │
+        └────────────────┬────────────────┘
+                         │
+                  Runtime / Reality
 ```
 
-このロードマップだと、**AXIOMが「共通規格の土台」、Capsuleが「拡張層」、PSS・LRP・DCKが「利用する上位プロトコル」**という役割が一貫し、今まで取り組んできた各プロジェクトも自然に統合できます。
+**役割の整理**
+
+| 層 | 役割 |
+|----|------|
+| ACP | 状態の証明・因果・座標（State Integrity） |
+| PLP | 状態表現（State Representation）— 最初のネイティブプロファイル |
+| Capsule | 可変・実行時ペイロード |
+| LRP / PSS / DCK | 上位利用プロトコル |
+
+この構造により、**ACPが中核ハブ**となり、PLP以外の状態表現にも広がる余地を確保できます。
