@@ -1,0 +1,96 @@
+{
+  "header": {
+    "protocol": "AXIOM",
+    "version": "1.0.3",
+    "encoding": "rfc8785-jcs",
+    "hash_algorithm": "sha256"
+  },
+  "genesis": {
+    "genesis_id": "GENESIS-MERGE",
+    "created_by": "System",
+    "initial_state_hash": "64b35aeda8bcf99da0b29e356564814edfb8f89b7626d8362666a9295eae530a",
+    "timestamp": "2026-08-01T00:00:00Z"
+  },
+  "core": {
+    "identity": {
+      "entity": "Agent-1",
+      "scope": "World-0",
+      "domain": "Physics",
+      "boundary": []
+    },
+    "state": {
+      "current": {
+        "pos": {
+          "$type": "decimal",
+          "$value": "12"
+        }
+      },
+      "initial": {
+        "pos": {
+          "$type": "decimal",
+          "$value": "0"
+        }
+      },
+      "target": {
+        "pos": {
+          "$type": "decimal",
+          "$value": "100"
+        }
+      },
+      "transition": [
+        "merge"
+      ]
+    },
+    "invariant": {
+      "must_hold": [],
+      "forbidden": [],
+      "conservation": []
+    },
+    "constraint": {
+      "hard": [],
+      "soft": [],
+      "resource": [],
+      "limit": []
+    }
+  },
+  "transitions": [
+    {
+      "transition_id": "T1",
+      "sequence_number": 1,
+      "before_states": [
+        "64b35aeda8bcf99da0b29e356564814edfb8f89b7626d8362666a9295eae530a"
+      ],
+      "after": "ec069060c4d76c4321c8404de7a6f7a0c26fd403d96978bfdd2ede832ac41c31",
+      "operation": "branch_a",
+      "actor": "Agent-A",
+      "timestamp": "2026-08-01T00:00:01Z",
+      "parent_transitions": []
+    },
+    {
+      "transition_id": "T2",
+      "sequence_number": 2,
+      "before_states": [
+        "ec069060c4d76c4321c8404de7a6f7a0c26fd403d96978bfdd2ede832ac41c31"
+      ],
+      "after": "PLACEHOLDER_B",
+      "operation": "branch_b",
+      "actor": "Agent-B",
+      "timestamp": "2026-08-01T00:00:02Z",
+      "parent_transitions": ["T1"]
+    },
+    {
+      "transition_id": "T3_MERGE",
+      "sequence_number": 3,
+      "before_states": [
+        "ec069060c4d76c4321c8404de7a6f7a0c26fd403d96978bfdd2ede832ac41c31",
+        "PLACEHOLDER_B"
+      ],
+      "after": "ec069060c4d76c4321c8404de7a6f7a0c26fd403d96978bfdd2ede832ac41c31",
+      "operation": "merge_states",
+      "actor": "Agent-Master",
+      "timestamp": "2026-08-01T00:00:03Z",
+      "parent_transitions": ["T1", "T2"],
+      "reason": "converge branches"
+    }
+  ]
+}
