@@ -1,0 +1,73 @@
+{
+  "header": {
+    "protocol": "AXIOM",
+    "version": "1.0.3",
+    "encoding": "rfc8785-jcs",
+    "hash_algorithm": "sha256"
+  },
+  "genesis": {
+    "genesis_id": "GENESIS-RICH",
+    "created_by": "Architect",
+    "initial_state_hash": "60db5169aa10c30cdc867a003d53fcfab59775bdbcddfbb2ea1f2054ccd0b772",
+    "timestamp": "2026-08-01T00:00:00Z"
+  },
+  "core": {
+    "identity": {
+      "entity": "Origin-Agent",
+      "scope": "Universe-0",
+      "domain": "Foundation",
+      "boundary": [
+        "boundary-a"
+      ]
+    },
+    "state": {
+      "current": {
+        "energy": {
+          "$type": "decimal",
+          "$value": "1"
+        },
+        "phase": "init"
+      },
+      "initial": {
+        "energy": {
+          "$type": "decimal",
+          "$value": "1"
+        },
+        "phase": "init"
+      },
+      "target": {
+        "energy": {
+          "$type": "decimal",
+          "$value": "10"
+        },
+        "phase": "stable"
+      },
+      "transition": [
+        "bootstrap"
+      ]
+    },
+    "invariant": {
+      "must_hold": [
+        "energy >= 0"
+      ],
+      "forbidden": [
+        "negative_energy"
+      ],
+      "conservation": [
+        "total_mass"
+      ]
+    },
+    "constraint": {
+      "hard": [
+        "max_energy <= 100"
+      ],
+      "soft": [],
+      "resource": [
+        "cpu"
+      ],
+      "limit": [
+        "timeout=60"
+      ]
+    }
+  }
+}
