@@ -1,0 +1,71 @@
+{
+  "header": {
+    "protocol": "AXIOM",
+    "version": "1.0.3",
+    "encoding": "rfc8785-jcs",
+    "hash_algorithm": "sha256"
+  },
+  "genesis": {
+    "genesis_id": "GENESIS-TRANS",
+    "created_by": "System",
+    "initial_state_hash": "64b35aeda8bcf99da0b29e356564814edfb8f89b7626d8362666a9295eae530a",
+    "timestamp": "2026-08-01T00:00:00Z"
+  },
+  "core": {
+    "identity": {
+      "entity": "Agent-1",
+      "scope": "World-0",
+      "domain": "Physics",
+      "boundary": []
+    },
+    "state": {
+      "current": {
+        "pos": {
+          "$type": "decimal",
+          "$value": "10.5"
+        }
+      },
+      "initial": {
+        "pos": {
+          "$type": "decimal",
+          "$value": "0"
+        }
+      },
+      "target": {
+        "pos": {
+          "$type": "decimal",
+          "$value": "100"
+        }
+      },
+      "transition": [
+        "move"
+      ]
+    },
+    "invariant": {
+      "must_hold": [],
+      "forbidden": [],
+      "conservation": []
+    },
+    "constraint": {
+      "hard": [],
+      "soft": [],
+      "resource": [],
+      "limit": []
+    }
+  },
+  "transitions": [
+    {
+      "transition_id": "T1",
+      "sequence_number": 1,
+      "before_states": [
+        "64b35aeda8bcf99da0b29e356564814edfb8f89b7626d8362666a9295eae530a"
+      ],
+      "after": "64ef83d9c4dcdfbef9caf3ed0414fbe4422e26c40f255aeb29240d5b7fb0f3e4",
+      "operation": "move",
+      "actor": "Agent-1",
+      "timestamp": "2026-08-01T00:00:01Z",
+      "parent_transitions": [],
+      "reason": "initial movement"
+    }
+  ]
+}
