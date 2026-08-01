@@ -1,7 +1,7 @@
 {
   "core_hash": "64b35aeda8bcf99da0b29e356564814edfb8f89b7626d8362666a9295eae530a",
   "genesis_hash": "87fe3561300fd54c83895830ba8c68860b59eeaaa03f01f2694d8da294c3a84b",
-  "coordinate_id": "361090f3fb4e5a08dbd59d3edc6b4fed458d4a6fe50960bf03fbdd20204d8491",
-  "canonical_json_sha256": "701fedd24d00b3d28b2e2ab5f1a2efe44200406a9b947161518c514d5b6fae1b",
+  "coordinate_id": "47420aef70d7770940142363895194b27c16299974ffd6cdd79f583b26116255",
+  "canonical_json_sha256": "dc7b719e61281022003aa703cff50a58f98552ca1b570b91244eaad776a75a00",
   "validation": "PASS"
 }
