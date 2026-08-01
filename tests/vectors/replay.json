@@ -1,0 +1,96 @@
+{
+  "header": {
+    "protocol": "AXIOM",
+    "version": "1.0.3",
+    "encoding": "rfc8785-jcs",
+    "hash_algorithm": "sha256"
+  },
+  "genesis": {
+    "genesis_id": "GENESIS-REPLAY",
+    "created_by": "System",
+    "initial_state_hash": "64b35aeda8bcf99da0b29e356564814edfb8f89b7626d8362666a9295eae530a",
+    "timestamp": "2026-08-01T00:00:00Z"
+  },
+  "core": {
+    "identity": {
+      "entity": "Agent-1",
+      "scope": "World-0",
+      "domain": "Physics",
+      "boundary": []
+    },
+    "state": {
+      "current": {
+        "pos": {
+          "$type": "decimal",
+          "$value": "3"
+        }
+      },
+      "initial": {
+        "pos": {
+          "$type": "decimal",
+          "$value": "0"
+        }
+      },
+      "target": {
+        "pos": {
+          "$type": "decimal",
+          "$value": "10"
+        }
+      },
+      "transition": []
+    },
+    "invariant": {
+      "must_hold": [],
+      "forbidden": [],
+      "conservation": []
+    },
+    "constraint": {
+      "hard": [],
+      "soft": [],
+      "resource": [],
+      "limit": []
+    }
+  },
+  "transitions": [
+    {
+      "transition_id": "T1",
+      "sequence_number": 1,
+      "before_states": [
+        "64b35aeda8bcf99da0b29e356564814edfb8f89b7626d8362666a9295eae530a"
+      ],
+      "after": "850f7cc99bde4e58fc6c330d1d9748e57ffa07a42d186130cb5dac65efb6dbcf",
+      "operation": "step1",
+      "actor": "A",
+      "timestamp": "2026-08-01T00:00:01Z",
+      "parent_transitions": []
+    },
+    {
+      "transition_id": "T2",
+      "sequence_number": 2,
+      "before_states": [
+        "850f7cc99bde4e58fc6c330d1d9748e57ffa07a42d186130cb5dac65efb6dbcf"
+      ],
+      "after": "39b3937c3303a563a7f5fb9ce0dbad842fdf7e11812377f298e8fd0847efe16c",
+      "operation": "step2",
+      "actor": "A",
+      "timestamp": "2026-08-01T00:00:02Z",
+      "parent_transitions": [
+        "T1"
+      ]
+    },
+    {
+      "transition_id": "T3",
+      "sequence_number": 3,
+      "before_states": [
+        "39b3937c3303a563a7f5fb9ce0dbad842fdf7e11812377f298e8fd0847efe16c"
+      ],
+      "after": "ab6e1126da4e88bd57e2da147f295b6a51ea92211251d95c4ae9fcc857c028ea",
+      "operation": "step3",
+      "actor": "A",
+      "timestamp": "2026-08-01T00:00:03Z",
+      "parent_transitions": [
+        "T2"
+      ]
+    }
+  ]
+}
