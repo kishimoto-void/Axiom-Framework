@@ -16,6 +16,8 @@ The framework is designed to be:
 
 The objective is to establish an open protocol layer that enables different AI models, runtimes, and programming languages to interoperate through common specifications.
 
+**Latest release**: [v1.1.0](https://github.com/kishimoto-void/Axiom-Framework/releases/tag/v1.1.0) · [Tags](https://github.com/kishimoto-void/Axiom-Framework/tags)
+
 ---
 
 ## Core Philosophy
@@ -70,7 +72,7 @@ It is an RFC-grade, language-neutral protocol for:
 - Causal DAG representation
 - Replay protection
 - Canonical serialization (RFC 8785 JCS)
-- Cryptographic proof attachment
+- Cryptographic proof attachment (`target_type`, SignPayload)
 - Cross-language interoperability
 
 ACP intentionally contains **no reasoning logic** and **no AI model assumptions**.
@@ -83,12 +85,17 @@ ACP intentionally contains **no reasoning logic** and **no AI model assumptions*
 | Proof | Execution Result |
 | Hashes | Model Output |
 
-**Current Version**: v1.0.3  
-**Reference Implementation**: Python  
-**Status**: Stable Reference + Golden Test Vectors (10/10 PASS)
+| Item | Value |
+|------|-------|
+| **Version** | **v1.1.0** |
+| **Status** | Stable Reference |
+| **Reference Implementation** | Python (`src/axiom/common_protocol.py`) |
+| **Golden Test Vectors** | **10/10 PASS** |
+| **Release** | [v1.1.0](https://github.com/kishimoto-void/Axiom-Framework/releases/tag/v1.1.0) |
 
 ### Key Documents
 
+- **[ACP SPECIFICATION (RFC-AXIOM-0001) v1.1.0](docs/AXIOM_COMMON_PROTOCOL_SPECIFICATION.md)** — normative protocol text
 - [ACP Overview](docs/AXIOM_COMMON_PROTOCOL.md)
 - [ACP Roadmap](docs/AXIOM_COMMON_PROTOCOL_ROADMAP.md)
 - [Golden Test Vectors](tests/vectors/README.md)
@@ -194,23 +201,24 @@ Defines reasoning as observable state transitions.
 Axiom-Framework/
 ├── README.md
 ├── ROADMAP.md
-├── LICENSE                          # Non-Commercial / Non-Military
+├── LICENSE                          # AXIOM Framework Research License v1.0
 │
 ├── docs/
+│   ├── AXIOM_COMMON_PROTOCOL_SPECIFICATION.md   # RFC-AXIOM-0001 v1.1.0
 │   ├── AXIOM_COMMON_PROTOCOL.md
 │   ├── AXIOM_COMMON_PROTOCOL_ROADMAP.md
 │   └── UPR_v1.2_Specification.md
 │
 ├── src/
 │   ├── axiom/
-│   │   ├── common_protocol.py       # ACP v1.0.3 Reference Implementation
+│   │   ├── common_protocol.py       # ACP v1.1.0 Reference Implementation
 │   │   └── upr.py
 │   └── modules/
 │       ├── plp_kernel.py
 │       └── plp_capsule.py
 │
 └── tests/
-    └── vectors/                     # Official Golden Test Vectors
+    └── vectors/                     # Official Golden Test Vectors (v1.1.0)
         ├── README.md
         ├── CONFORMANCE_REPORT.md
         ├── *.json
@@ -223,14 +231,15 @@ Axiom-Framework/
 
 | Module | Status |
 |--------|--------|
-| **AXIOM Common Protocol (ACP) v1.0.3** | **Stable Reference** |
+| **AXIOM Common Protocol (ACP) v1.1.0** | **Stable Reference** |
+| ACP SPECIFICATION (RFC-AXIOM-0001) | **v1.1.0** |
 | Golden Test Vectors | **10/10 PASS** |
 | UPR v1.2 | Stable |
 | PLP Kernel | Stable |
 | PLP Capsule | Stable |
 | PSS | In Progress |
 | LRP | In Progress |
-| DCK | Planned Integration |
+| DCK | Planned Integration (MIT License) |
 
 ---
 
@@ -253,9 +262,24 @@ ACP is designed so that independent implementations in Rust, Go, Java, TypeScrip
 
 ---
 
+## Releases
+
+| Tag | Notes |
+|-----|-------|
+| **[v1.1.0](https://github.com/kishimoto-void/Axiom-Framework/releases/tag/v1.1.0)** | ACP SPECIFICATION + Reference Implementation + Golden Test Vectors |
+
+All tags: https://github.com/kishimoto-void/Axiom-Framework/tags
+
+---
+
 ## License
 
-**Non-Commercial / Non-Military Use Only.**
+**[AXIOM Framework Research License v1.0](LICENSE)**
 
-Commercial use is currently prohibited.  
+- Personal / academic / educational / non-profit use permitted
+- Attribution required
+- Military and harm-oriented use prohibited
+- Commercial use requires a separate license
+- DCK is under MIT License (separate component)
+
 See the [LICENSE](LICENSE) file for full terms.
