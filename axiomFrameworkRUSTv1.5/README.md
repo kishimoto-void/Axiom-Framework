@@ -1,25 +1,36 @@
 # Axiom Framework — Rust v1.5
 
-Rust reference implementations for the Axiom / PLP ecosystem.
+Rust reference bundle for the Axiom / PLP ecosystem (2026-08).
 
-## Contents
+## Status
 
-| File | Description |
-|------|-------------|
-| `plp_capsule_v1_1_3.rs` | **PLP Capsule v1.1.3** — production-ready reference with fully controlled deterministic serialization, ryu float canonicalization, clear integrity API (`verify` / `recompute_hash` / `seal`), Golden Vector suite (10/10 cross-language match with Python) |
-| `PLP_CAPSULE_GOLDEN_VECTORS_v1_1_3.md` | Official Golden Vectors (10 cases: empty, multi-observer, Added/Modified/Removed, Japanese, control characters) |
-| `acp_v1_1_0_reference.rs` | AXIOM Common Protocol (ACP) v1.1.0 normative reference (JCS, multi-hash, causal DAG) |
+| Asset | Status |
+|-------|--------|
+| **Golden Vectors v1.1.3** | ✅ Pushed — 10/10 cross-language PASS (Rust ≡ Python) |
+| **PLP Capsule v1.1.3 source** | ⏳ Full `.rs` (~38KB) prepared locally; upload in progress / manual |
+| **ACP v1.1.0 reference** | ⏳ Full `.rs` prepared locally |
 
-## PLP Capsule v1.1.3 highlights
+## Files in this directory
+
+- `PLP_CAPSULE_GOLDEN_VECTORS_v1_1_3.md` — Official golden suite (empty, multi-observer, Added/Modified/Removed, Japanese, control chars)
+- `README.md` — this file
+
+## PLP Capsule v1.1.3 design summary
 
 - Hand-written deterministic serializer (no `serde_json::to_vec` lock-in)
 - `timestamp_ns` always string in Canonical Hash (JS 53-bit safe)
-- `write_raw_str` uses Unicode scalar values (`chars()`)
+- `write_raw_str` via Unicode scalar values (`chars()`)
 - `DeltaKind` independent of Debug
+- `verify` / `recompute_hash` / `seal` clear contracts
 - `BuildParams` + `build_with_meta` for deterministic tests
-- Cross-language Golden Hash verified (Rust ≡ Python)
 
-### Recommended Cargo features
+### Protocol / version
+
+- Protocol: `PLP/1.1`
+- Capsule version: `1.1.3`
+- Bundle: **axiomFrameworkRUSTv1.5**
+
+### Recommended Cargo.toml
 
 ```toml
 [dependencies]
@@ -36,12 +47,12 @@ sha2-hash = []
 blake3-hash = ["blake3"]
 ```
 
-## Version alignment
+## Local artifacts (Grok sandbox)
 
-- Protocol: `PLP/1.1`
-- Capsule version: `1.1.3`
-- Bundle label: **axiomFrameworkRUSTv1.5** (2026-08)
+```
+/home/workdir/artifacts/plp_capsule_v1_1_3.rs
+/home/workdir/artifacts/acp_v1_1_0_reference.rs
+/home/workdir/artifacts/PLP_CAPSULE_GOLDEN_VECTORS_v1_1_3.md
+```
 
-## Status
-
-Ready as cross-language reference for PLP Capsule hashing and as a companion to the Python Axiom-Framework / PLP modules.
+Full source push of the large `.rs` files may require a follow-up commit (tool payload limits). Golden Vectors are authoritative and already live.
