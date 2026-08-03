@@ -10,7 +10,8 @@ Axiom Framework は、この問題を根本から解決するために設計さ�
 
 Instead of defining *how* an AI should think, Axiom defines *how state is represented, verified, and constrained* — so different languages, runtimes, and models can share the same reality.
 
-**Latest**: [v1.1.0](https://github.com/kishimoto-void/Axiom-Framework/releases/tag/v1.1.0) · Rust companion: [`axiomFrameworkRUSTv1.5/`](axiomFrameworkRUSTv1.5/)
+**Latest**: [v1.1.0](https://github.com/kishimoto-void/Axiom-Framework/releases/tag/v1.1.0) · Rust companion: [`axiomFrameworkRUSTv1.5/`](axiomFrameworkRUSTv1.5/)  
+**English**: [README.en.md](README.en.md)
 
 ---
 
@@ -147,7 +148,8 @@ PLP is the first native state-representation profile of ACP.
 
 ```
 Axiom-Framework/
-├── README.md
+├── README.md                      # 日本語（主）
+├── README.en.md                   # English
 ├── ROADMAP.md
 ├── LICENSE
 ├── docs/                          # ACP / UPR specs
