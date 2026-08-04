@@ -1,8 +1,8 @@
 # Axiom Framework — Rust v1.5
 
-Rust reference implementations for the Axiom / PLP / LRP ecosystem.
+Rust reference implementations for the Axiom / PLP / LRP / PSS ecosystem.
 
-**Status:** PLP Capsule + ACP complete. LRP v1.5.0 research snapshot added (provisional).
+**Status:** PLP Capsule + ACP complete. LRP v1.5.0 research snapshot added (provisional). PSS scaffolding added.
 
 ## Contents
 
@@ -14,6 +14,7 @@ Rust reference implementations for the Axiom / PLP / LRP ecosystem.
 | `PLP_CAPSULE_GOLDEN_TEST_REPORT.md` | Cross-language test report |
 | `lrp/` | **LRP v1.5.0-research-rust-strict-final** (provisional snapshot) |
 | `LRP_GOLDEN_VECTORS_v1_5_provisional.md` | LRP quantitative Golden notes (to be finalized at 1.5 completion) |
+| `pss/` | **PSS v1.0.0-rc1** Problem Specification Standard (scaffolding / 本体手動追加) |
 
 ## LRP v1.5.0 (Provisional)
 
@@ -36,11 +37,17 @@ axiomFrameworkRUSTv1.5/
 ├── PLP_CAPSULE_GOLDEN_VECTORS_v1_1_3.md
 ├── PLP_CAPSULE_GOLDEN_TEST_REPORT.md
 ├── LRP_GOLDEN_VECTORS_v1_5_provisional.md
-└── lrp/
+├── lrp/
+│   ├── Cargo.toml
+│   └── src/
+│       ├── lib.rs
+│       └── main.rs
+└── pss/
     ├── Cargo.toml
-    ├── src/
-    │   ├── lib.rs
-    │   └── main.rs
+    ├── README.md
+    └── src/
+        ├── lib.rs
+        └── main.rs
 ```
 
 Ready as the cross-language reference companion to the Python Axiom-Framework modules.
