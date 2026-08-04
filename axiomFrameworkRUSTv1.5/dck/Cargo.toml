@@ -1,0 +1,15 @@
+[package]
+name = "dck_modular"
+version = "2.0.0"
+edition = "2021"
+description = "Difference Convergence Kernel (DCK) - fully modular + nalgebra multi-dimensional implementation"
+license = "MIT"
+
+[dependencies]
+tokio = { version = "=1.35.1", features = ["full"] }
+async-trait = "=0.1.77"
+thiserror = "=1.0.56"
+chrono = { version = "=0.4.31", default-features = false, features = ["clock", "std"] }
+uuid = { version = "=1.6.1", features = ["v4"] }
+futures = "=0.3.30"
+nalgebra = "=0.32.3"
