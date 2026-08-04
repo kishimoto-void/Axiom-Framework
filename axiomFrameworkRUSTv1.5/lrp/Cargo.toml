@@ -1,0 +1,15 @@
+[package]
+name = "lrp-research"
+version = "1.5.0"
+edition = "2021"
+description = "LRP Reasoning Transition Protocol - Strict Deterministic Research Edition (v1.5.0)"
+license = "Non-Commercial / Research Use Only"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+chrono = { version = "0.4", features = ["serde"] }
+
+[dev-dependencies]
+# for tests only if needed
