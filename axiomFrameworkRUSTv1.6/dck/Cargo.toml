@@ -1,0 +1,19 @@
+[package]
+name = "dck_modular"
+version = "2.2.0"
+edition = "2021"
+description = "Difference Convergence Kernel (DCK) v2.2 — modular + nalgebra + Golden-Vector metrics"
+license = "MIT"
+
+[dependencies]
+tokio = { version = "=1.35.1", features = ["full"] }
+async-trait = "=0.1.77"
+thiserror = "=1.0.56"
+chrono = { version = "=0.4.31", default-features = false, features = ["clock", "std", "serde"] }
+uuid = { version = "=1.6.1", features = ["v4"] }
+futures = "=0.3.30"
+nalgebra = "=0.32.3"
+serde = { version = "1.0", features = ["derive"] }
+
+[dev-dependencies]
+serde_json = "1.0"
