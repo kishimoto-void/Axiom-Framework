@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "persona": "System Architect",
+  "start_state": "initial",
+  "goal": {
+    "objective": "reach convergence",
+    "target_bp": 10000,
+    "tolerance_bp": 500
+  },
+  "current_difference_bp": 3200,
+  "constraints": {
+    "max_latency_ms": "100",
+    "priority": "high"
+  },
+  "context": [
+    "context-item-1",
+    "context-item-2"
+  ],
+  "gates": [
+    {
+      "name": "gate-alpha",
+      "passed": true,
+      "description": "first checkpoint",
+      "evaluated_at": "2026-08-06T12:00:02Z"
+    },
+    {
+      "name": "gate-beta",
+      "passed": false,
+      "description": "second checkpoint",
+      "evaluated_at": "2026-08-06T12:00:03Z"
+    }
+  ],
+  "zero_knowledge": false,
+  "created_at": "2026-08-06T12:00:00Z",
+  "updated_at": "2026-08-06T12:00:04Z"
+}
