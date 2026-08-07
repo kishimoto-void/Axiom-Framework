@@ -1,0 +1,1 @@
+8069a055090a9786d8cd6d1ca6c663071e386edaf13b4085f909a79a20bb71e4  capsule_v1.golden.json

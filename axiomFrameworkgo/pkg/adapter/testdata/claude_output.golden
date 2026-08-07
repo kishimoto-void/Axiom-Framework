@@ -1,0 +1,11 @@
+<capsule adapter_version="v1.0.0--alpha" protocol_version="v1" schema_version="2026-08">
+  <persona>System Architect</persona>
+  <section name="Constraints">
+    <item key="a_perf">Latency &lt; 100ms &amp; Fast!</item>
+    <item key="b_sec">&lt;script&gt;alert(1)&lt;/script&gt;</item>
+  </section>
+  <section name="Context">
+    <item>Context Item 1</item>
+    <item>Context Item 2</item>
+  </section>
+</capsule>

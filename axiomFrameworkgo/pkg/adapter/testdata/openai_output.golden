@@ -1,0 +1,11 @@
+<!-- Version: adapter=v1.0.0—alpha, protocol=v1, schema=2026-08 -->
+You are operating as: System Architect.
+
+# Constraints
+- a\_perf: Latency < 100ms & Fast!
+- b\_sec: <script>alert(1)</script>
+
+# Context
+- Context Item 1
+- Context Item 2
+

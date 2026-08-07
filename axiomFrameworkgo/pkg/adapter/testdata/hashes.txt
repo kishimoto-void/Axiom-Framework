@@ -1,0 +1,2 @@
+782389ceea041c536d668cf5b2b96b6eeb091e4e7ef42f3a9ade95cc53ba65cd  claude_output.golden
+ee941a1d5ff3c9be972d184a81514881566ab56cdd522eb00aafba7af4ef86b3  openai_output.golden
