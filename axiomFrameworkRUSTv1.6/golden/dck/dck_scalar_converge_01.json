@@ -1,0 +1,46 @@
+{
+  "vector_id": "dck_scalar_converge_01",
+  "description": "1-D state converges toward target under progressive telemetry",
+  "version": "2.2",
+  "dck_version": "2.2.0",
+  "config": {
+    "convergence_tolerance": 0.01,
+    "cholesky_floor": 1e-09,
+    "max_ticks": 50,
+    "max_gap_scale": 100.0
+  },
+  "initial_state": {
+    "mean": [0.0],
+    "covariance": [[1.0]],
+    "confidence": 0.5
+  },
+  "target": [1.0],
+  "telemetry_sequence": [
+    {"tick": 0, "raw": {"x": 0.1}},
+    {"tick": 1, "raw": {"x": 0.25}},
+    {"tick": 2, "raw": {"x": 0.4}},
+    {"tick": 3, "raw": {"x": 0.55}},
+    {"tick": 4, "raw": {"x": 0.68}},
+    {"tick": 5, "raw": {"x": 0.78}},
+    {"tick": 6, "raw": {"x": 0.85}},
+    {"tick": 7, "raw": {"x": 0.9}},
+    {"tick": 8, "raw": {"x": 0.94}},
+    {"tick": 9, "raw": {"x": 0.97}}
+  ],
+  "expected": {
+    "difference_total_after_ticks": {
+      "0": 0.9,
+      "5": 0.22,
+      "9": 0.03
+    },
+    "convergence_rate_after_9": 0.9997,
+    "ticks_to_threshold": null,
+    "final_mean_approx": [0.97],
+    "difference_curve": [1.0, 0.9, 0.75, 0.6, 0.45, 0.32, 0.22, 0.15, 0.1, 0.06, 0.03]
+  },
+  "tolerance": {
+    "absolute": 0.0001,
+    "relative": 0.001
+  },
+  "notes": "Locked from 2026-08-08 measurement run (Mahalanobis 1-D, var=1.0). Use evaluate_difference / DifferenceMetrics."
+}

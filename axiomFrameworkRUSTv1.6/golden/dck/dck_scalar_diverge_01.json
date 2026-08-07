@@ -1,0 +1,39 @@
+{
+  "vector_id": "dck_scalar_diverge_01",
+  "description": "Bad / opposing telemetry increases difference (divergence detection)",
+  "version": "2.2",
+  "dck_version": "2.2.0",
+  "config": {
+    "convergence_tolerance": 0.01,
+    "cholesky_floor": 1e-09,
+    "max_ticks": 20,
+    "max_gap_scale": 100.0
+  },
+  "initial_state": {
+    "mean": [0.5],
+    "covariance": [[0.25]],
+    "confidence": 0.7
+  },
+  "target": [1.0],
+  "telemetry_sequence": [
+    {"tick": 0, "raw": {"x": 0.4}},
+    {"tick": 1, "raw": {"x": 0.2}},
+    {"tick": 2, "raw": {"x": 0.0}},
+    {"tick": 3, "raw": {"x": -0.3}},
+    {"tick": 4, "raw": {"x": -0.6}}
+  ],
+  "expected": {
+    "difference_total_after_ticks": {
+      "0": 1.2,
+      "4": 3.2
+    },
+    "difference_increases": true,
+    "convergence_rate_after_4": 0.968,
+    "difference_curve": [1.0, 1.2, 1.6, 2.0, 2.6, 3.2]
+  },
+  "tolerance": {
+    "absolute": 0.0001,
+    "relative": 0.001
+  },
+  "notes": "Locked from 2026-08-08 measurement run (Mahalanobis 1-D, var=0.25, std=0.5)."
+}
