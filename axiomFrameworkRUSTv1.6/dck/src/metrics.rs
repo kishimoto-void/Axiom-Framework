@@ -13,6 +13,7 @@ use crate::config::DCKConfig;
 use crate::error::DCKError;
 use crate::state::StateEstimate;
 
+/// Component-wise view of residual difference.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Default)]
 pub struct DifferenceBreakdown {
     pub position: f64,
@@ -27,6 +28,7 @@ impl DifferenceBreakdown {
     }
 }
 
+/// Snapshot of difference between current estimate and a target.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct DifferenceMetrics {
     pub difference_total: f64,
@@ -262,6 +264,7 @@ impl ConvergenceReport {
     }
 }
 
+/// Pure, sync evaluation helper — no async, no tokio.
 pub fn evaluate_difference(
     estimate: &StateEstimate,
     target: &DVector<f64>,
