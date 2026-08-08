@@ -1,0 +1,120 @@
+[
+  {
+    "id": "01_en_cat_sleep",
+    "input": "cat sleeps on table",
+    "language": "en",
+    "tokens": [
+      "cat",
+      "sleeps",
+      "on",
+      "table"
+    ],
+    "annotations": [
+      {
+        "kind": "ENTITY",
+        "value": "cat",
+        "key": "e1"
+      },
+      {
+        "kind": "LOCATION",
+        "value": "table",
+        "key": "l1"
+      },
+      {
+        "kind": "ACTION",
+        "value": "sleep",
+        "key": "a1"
+      }
+    ],
+    "meta": {
+      "projector": "minimal-v0.1",
+      "token_count": "4",
+      "annotation_status": "canonical_projection_candidate"
+    },
+    "canonical_hash": "b130e1ff7e86f406d8acdd5b720b5a350111a99c78ca3037bc8387dadabe629b",
+    "raw_hash": "5dd6fc5d0435bf3e4911d369c9fdeede0463c0c4312ef663892692e74063c039"
+  },
+  {
+    "id": "02_ja_cat_sleep",
+    "input": "猫が机の上で寝ている。",
+    "language": "ja",
+    "tokens": [
+      "猫が机の上で寝ている"
+    ],
+    "annotations": [
+      {
+        "kind": "ENTITY",
+        "value": "cat",
+        "key": "e1"
+      },
+      {
+        "kind": "LOCATION",
+        "value": "table",
+        "key": "l1"
+      },
+      {
+        "kind": "ACTION",
+        "value": "sleep",
+        "key": "a1"
+      }
+    ],
+    "meta": {
+      "projector": "minimal-v0.1",
+      "token_count": "1",
+      "annotation_status": "canonical_projection_candidate"
+    },
+    "canonical_hash": "b8757b8732d3b2125ecb4af437d316d5f8fd5bc55a4adff64966b5e6ee5ef745",
+    "raw_hash": "097cc017b1f21aae2d437a4ba382176c7bc95b57be3042d6ec06c5b7a546a4c9"
+  },
+  {
+    "id": "03_ja_cat_run",
+    "input": "猫が机の上で走っている。",
+    "language": "ja",
+    "tokens": [
+      "猫が机の上で走っている"
+    ],
+    "annotations": [
+      {
+        "kind": "ENTITY",
+        "value": "cat",
+        "key": "e1"
+      },
+      {
+        "kind": "LOCATION",
+        "value": "table",
+        "key": "l1"
+      },
+      {
+        "kind": "ACTION",
+        "value": "run",
+        "key": "a2"
+      }
+    ],
+    "meta": {
+      "projector": "minimal-v0.1",
+      "token_count": "1",
+      "annotation_status": "canonical_projection_candidate"
+    },
+    "canonical_hash": "b4d048bd6c10ea5114f4dd21ccfd9a839459a26e97d02aac5712f7a3d0db84ae",
+    "raw_hash": "8c1ad4f2460c0e6a5e18e62d4fe24948b9d78c5be7a8a26c3c5e10af5c7829aa"
+  },
+  {
+    "id": "04_en_neutral",
+    "input": "the sky is blue",
+    "language": "en",
+    "tokens": [
+      "the",
+      "sky",
+      "is",
+      "blue"
+    ],
+    "annotations": [],
+    "meta": {
+      "projector": "minimal-v0.1",
+      "token_count": "4",
+      "annotation_status": "canonical_projection_candidate"
+    },
+    "canonical_hash": "32b79f86d61fd3132bdffcec0fa13592b64dc175f9cfa3d54638f0af1da4872e",
+    "raw_hash": "4d856725cba58f4435ccded2e23dc7842bfd7157f966d8164828f37740b3fb77"
+  }
+]
