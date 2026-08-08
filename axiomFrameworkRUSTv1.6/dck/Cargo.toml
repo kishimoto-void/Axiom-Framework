@@ -1,8 +1,8 @@
 [package]
 name = "dck_modular"
-version = "2.2.0"
+version = "2.3.0"
 edition = "2021"
-description = "Difference Convergence Kernel (DCK) v2.2 — modular + nalgebra + Golden-Vector metrics"
+description = "Difference Convergence Kernel (DCK) v2.3 — dual-hash taxonomy + measurement library"
 license = "MIT"
 
 [dependencies]

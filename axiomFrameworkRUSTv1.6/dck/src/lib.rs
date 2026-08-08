@@ -1,16 +1,19 @@
-//! Difference Convergence Kernel (DCK) v2.2 (AXIOM Framework Rust v1.6)
+//! Difference Convergence Kernel (DCK) v2.3 (AXIOM Framework Rust v1.6)
 //!
 //! Fully modular + nalgebra multi-dimensional implementation.
 //!
+//! v2.3 (dual-hash difference taxonomy):
+//! - HashA (Invariant/Physical, ACP Ground Truth) / HashB (Semantic)
+//! - DualHashClass matrix: None | Semantic | State | Compound
+//! - ConstraintVerdict + DifferenceKind (State / Semantic / Constraint)
+//! - DualHashEvaluation for DCK / CI / hallucination detection
+//!
 //! v2.2 (measurement library completeness):
 //! - DifferenceBreakdown { position, velocity, covariance, confidence }
-//! - ConvergenceReason { ThresholdReached, MaxTick, Divergence, NumericalIssue, InProgress }
-//! - StabilityScore { score, speed, smoothness, final_accuracy }
-//! - ConvergenceReport::history() / difference_curve() / finish()
+//! - ConvergenceReason / StabilityScore / ConvergenceReport
 //!
 //! v2.1:
-//! - DifferenceMetrics / ConvergenceReport / evaluate_difference
-//! - MockClock / Golden unit tests
+//! - DifferenceMetrics / evaluate_difference / MockClock
 //!
 //! Design goals retained:
 //! - Module separation, nalgebra multi-D, injected Clock, config-driven scoring
@@ -29,6 +32,7 @@ pub mod gap;
 pub mod kernel;
 pub mod stubs;
 pub mod metrics;
+pub mod dual_hash;
 pub mod golden_tests;
 
 // Re-exports
@@ -49,4 +53,8 @@ pub use metrics::{
     evaluate_difference, evaluate_difference_with_velocity,
     ConvergenceReason, ConvergenceReport, DifferenceBreakdown, DifferenceMetrics,
     StabilityScore,
+};
+pub use dual_hash::{
+    validate_constraint, ConstraintVerdict, DifferenceKind, DualHashClass,
+    DualHashEvaluation, DualHashSnapshot, HashA, HashB,
 };
