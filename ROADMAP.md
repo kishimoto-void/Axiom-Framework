@@ -2,14 +2,14 @@
 
 > **実験は忠実に実際行って**
 
-## 1. 現状認識（2026-07-31 更新）
+## 1. 現状認識（2026-08-08 更新）
 
 これまでの議論と既存コンポーネントを踏まえると、理論モジュールはかなり揃ってきている。
 
 | モジュール | 状態 | 備考 |
 |-----------|------|------|
 | PSS (Problem Specification System) | ✅ 揃っている | 問題定義の入口 |
-| PLP (Particle Language Protocol) | ✅ 揃っている | 粒子言語による記述 |
+| PLP (Particle Language Protocol) | ✅ 揃っている（改良案策定中） | 現状は粒子言語による記述。今後は State Projection へ役割転換を検討 |
 | Capsule | ✅ 揃っている | 状態・制約のカプセル化 |
 | LRP | ✅ 揃っている | レイヤー間の関係処理 |
 | DCK (Difference Convergence Kernel) | ✅ 揃っている | 差分収束の中核 |
@@ -105,6 +105,10 @@ UPR の `Pipeline` / `PipelineDefinition` をそのまま活用・拡張。
 
 「Axiomを通した方が良かった」を定量的に示せるようにする。
 
+### 6. PLP 改良（State Projection 方向） — 研究プロトタイプ
+
+既存の Runtime 優先順位を崩さず、PLP の責務を明確化する方向で仕様を先行させる。
+
 ---
 
 ## 3. フェーズ計画
@@ -143,6 +147,187 @@ UPR の `Pipeline` / `PipelineDefinition` をそのまま活用・拡張。
 - [ ] より高度なMulti-Agent Pipeline
 - [ ] ドキュメント整備（API仕様・実験手順）
 
+### Phase PLP-R: PLP 改良ロードマップ（Research Prototype） — 2026-08-08 追加
+
+既存の AXIOM Framework の流れを崩さず、PLP を「意味解析器」から「状態投影器（State Projection）」へ役割転換する。
+
+#### 目的
+
+PLP（Particle Language Protocol）は「自然言語を理解するプロトコル」ではない。
+
+PLPの責務は、
+
+«入力を決定論的な状態へ投影（Projection）し、LLMへ渡すためのCanonical Stateを生成すること»
+
+である。
+
+#### 全体構造
+
+```
+Raw Input
+    │
+    ▼
+PSS
+(正規化)
+    │
+    ▼
+PLP
+(State Projection)
+    │
+    ▼
+Capsule
+(Hash + Canonical State)
+    │
+    ▼
+LLM Agent
+    │
+    ▼
+DCK
+(State Difference)
+```
+
+- PLPは意味解析をしない。
+- PLPは「状態」を生成する。
+
+#### PLPが生成するデータ（例）
+
+入力: `猫が机の上で寝ている。`
+
+```json
+{
+  "version": "plp-2.0",
+  "canonical_state": {
+    "raw_hash": "sha256:9d83...",
+    "language": "ja",
+    "tokens": ["...", "...", "..."],
+    "annotations": [
+      {"type": "ENTITY", "value": "cat"},
+      {"type": "ACTION", "value": "sleep"},
+      {"type": "LOCATION", "value": "table"}
+    ]
+  }
+}
+```
+
+重要な点:
+- Raw Text は消さない。
+- Canonical Annotation も保持する。
+
+#### Capsule構造
+
+```
+Capsule
+├── Header
+├── Raw Text
+├── Canonical Annotation
+├── Hash
+└── Signature(optional)
+```
+
+つまり Capsule = Original Text + Canonical Annotation + Hash
+
+#### Rust 構造例（参考）
+
+```rust
+#[derive(Serialize, Deserialize)]
+pub struct Capsule {
+    pub version: String,
+    pub raw_text: String,
+    pub canonical: CanonicalState,
+    pub hash: String,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct CanonicalState {
+    pub language: String,
+    pub annotations: Vec<Annotation>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct Annotation {
+    pub kind: AnnotationKind,
+    pub value: String,
+}
+
+pub enum AnnotationKind {
+    Entity,
+    Action,
+    Relation,
+    Attribute,
+    Constraint,
+}
+```
+
+ここでは「意味」を保存するのではなく、LLMへ渡す最低限の決定論的情報だけを持つ。
+
+#### LLMへ渡す情報
+
+LLMへは Raw Input / Canonical Annotation / Capsule Hash を一緒に渡す。
+
+例:
+
+```
+RAW:
+猫が机の上で寝ている。
+--------------------------------
+CANONICAL
+ENTITY(cat)
+ACTION(sleep)
+LOCATION(table)
+--------------------------------
+HASH
+sha256:....
+```
+
+- LLMは Raw を読んで自然言語を理解する。
+- Canonical を読んで「ここは不変条件」と認識する。
+
+#### DCKとの連携
+
+DCKは Raw ではなく、Canonical State を比較する。
+
+例:
+
+- 状態A: ENTITY(cat) ACTION(sleep)
+- 状態B: ENTITY(cat) ACTION(run)
+- Difference: ACTION sleep → run を数値化する。
+
+#### マルチエージェント制御
+
+```
+Capsule (Raw + Canonical + Hash)
+    ↓
+Agent A → Plan A
+    ↓
+Capsule
+    ↓
+Agent B → Plan B
+    ↓
+DCK → Difference
+    ↓
+Monitor → "Plan AとPlan Bが分岐しました" → User Confirmation
+```
+
+これにより LLM は勝手に状態を更新しない。状態更新は Monitor またはユーザーが決定する。
+
+#### 将来の位置付け
+
+最終的に PLP は「Particle Language」というより **Projection Language Protocol** になる可能性が高い。
+
+つまり Input を意味へ変換するのではなく、State へ投影する。
+
+PLPは AI の意味理解層ではなく、AI全体で共有する **決定論的状態空間（Deterministic State Space）** を生成するプロトコルとして位置付ける。
+
+これにより Capsule・ACP・DCK は共通の状態表現を扱い、複数のLLMやマルチエージェント環境でも同じ基準で推論・比較・状態遷移を行える。
+
+#### 進め方（推奨）
+
+1. この方向で仕様（RFC）を先に固める。
+2. その後 Rust 実装へ落とし込む。
+3. 既存の Runtime / UPR 優先順位は崩さない（並行研究プロトタイプとして扱う）。
+
+**ポイント**: 「意味を使わずにどうやって意味を抽出するのか」というパラドックスを避けつつ、Capsule・ACP・DCKとの責務も自然に整理できる。
+
 ---
 
 ## 4. 設計上の原則
@@ -162,6 +347,9 @@ UPR の `Pipeline` / `PipelineDefinition` をそのまま活用・拡張。
 5. **UPR の純粋性を維持する**  
    Stage は副作用を持たず、Runtime がすべてのメタデータと外部効果を責任を持つ。
 
+6. **PLP の責務分離を厳守する**  
+   PLPは意味理解を行わず、決定論的な Canonical State への投影のみを担当する。
+
 ---
 
 ## 5. 最初の具体的ゴール（再掲）
@@ -172,4 +360,4 @@ UPR の `Pipeline` / `PipelineDefinition` をそのまま活用・拡張。
 
 ---
 
-*最終更新: 2026-07-31*
+*最終更新: 2026-08-08（PLP改良ロードマップ追加）*
