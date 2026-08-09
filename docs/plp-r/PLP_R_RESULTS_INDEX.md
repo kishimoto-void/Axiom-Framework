@@ -46,3 +46,11 @@
 ---
 
 *実験は忠実に実際行って*
+
+---
+
+## Related (v2.0 coordination)
+
+| Document | Description |
+|----------|-------------|
+| [../ROUND_CONSENSUS_PROTOCOL_v0_1.md](../ROUND_CONSENSUS_PROTOCOL_v0_1.md) | Multi-agent Round Consensus under HashA (Observer / Reasoner rotation) |
